@@ -1,10 +1,10 @@
 {
   "name": "express-response",
-  "version": "1.0.3",
-  "description": "Easy way to make JSONs responses",
+  "version": "2.0.0",
+  "description": "Easy way to make JSONs responses and promisified response flow",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha -R spec test/**/*.test.js"
+    "test": "node_modules/mocha/bin/mocha -R spec -t 50 test/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -18,11 +18,19 @@
   "keywords": [
     "express",
     "request",
-    "response"
+    "response",
+    "http",
+    "status",
+    "promise",
+    "bluebird",
+    "q",
+    "api",
+    "rest"
   ],
   "homepage": "https://github.com/fedescarpa/express-response",
   "dependencies": {
     "http-status-codes": "1.0.4",
+    "humanize-string": "1.0.1",
     "lodash": "2.4.1",
     "node-custom-errors": "0.1.4"
   },
@@ -31,6 +39,7 @@
     "express": "4.11.1",
     "interpolate": "0.1.0",
     "mocha": "2.1.0",
+    "request": "2.53.0",
     "should": "4.6.1"
   }
 }
