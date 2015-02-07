@@ -40,6 +40,7 @@
     "interpolate": "0.1.0",
     "mocha": "2.1.0",
     "request": "2.53.0",
-    "should": "4.6.1"
+    "should": "4.6.1",
+    "supertest": "0.15.0"
   }
 }
