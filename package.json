@@ -1,6 +1,6 @@
 {
   "name": "node-friendly-response",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "description": "Easy way to make JSONs responses and promisified response flow",
   "main": "index.js",
   "scripts": {
@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fedescarpa/'node-friendly-response.git"
+    "url": "https://github.com/fedescarpa/node-friendly-response.git"
   },
   "author": "Federico Scarpa",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fedescarpa/'node-friendly-response/issues"
+    "url": "https://github.com/fedescarpa/node-friendly-response/issues"
   },
   "keywords": [
     "express",
@@ -27,7 +27,7 @@
     "api",
     "rest"
   ],
-  "homepage": "https://github.com/fedescarpa/'node-friendly-response",
+  "homepage": "https://github.com/fedescarpa/node-friendly-response",
   "dependencies": {
     "http-status-codes": "1.0.4",
     "humanize-string": "1.0.1",
