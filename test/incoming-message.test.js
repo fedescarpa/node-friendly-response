@@ -10,20 +10,9 @@ var s = require('interpolate');
 var express = require('express');
 var request = require('request');
 var Bluebird = require('bluebird');
-var HttpStatusCodes = require('http-status-codes');
+var StatusCodes = require('./sort-http-status-codes');
 
 Bluebird.promisifyAll(request);
-
-var StatusCodes = _(HttpStatusCodes)
-  .map(function (value, key) {
-    return { key: key, value: value };
-  })
-  .filter(function (val) {
-    return !_.isFunction(val.value) && val.value !== 100;
-    // CONTINUE is not tested because it's need to be sent with Expect: 100-continue header
-  })
-  .sortBy('value')
-  .value();
 
 describe('Incoming message response', function () {
 
