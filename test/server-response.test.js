@@ -12,7 +12,9 @@ var express = require('express');
 var Bluebird = require('bluebird');
 var supertest = require('supertest');
 
+var format = require('../lib/utils/format');
 var StatusCodes = require('./sort-http-status-codes');
+
 
 describe('Server response', function () {
 
@@ -31,11 +33,13 @@ describe('Server response', function () {
   context('#send from status', function () {
 
     StatusCodes.forEach(function (status) {
+      var methodName = format.method(status.key);
+      var options = _.defaults(_.clone(status), { methodName: methodName });
 
-      it(s('{key} call should responds with a {value} status code', status), function (done) {
+      it(s('{methodName} call should responds with a {value} status code', options), function (done) {
 
         app.get('/', function (req, res) {
-          res[status.key]();
+          res[methodName]();
         });
 
         request
@@ -53,31 +57,35 @@ describe('Server response', function () {
 
     context('#response error', function () {
 
-      StatusCodes.filter(function (status) { return status.value >= 400; }).forEach(function (status) {
+      StatusCodes
+        .filter(function (status) { return status.value >= 400; })
+        .forEach(function (status) {
+          status = _.defaults(_.clone(status), { exceptionName : format.exception(status.key)});
 
-        it(s('should send {value} if {key} error was thrown', status), function (done) {
+          it(s('should send {value} if {exceptionName} error was thrown', status), function (done) {
 
-          app.get('/', function (req, res) {
-            Bluebird
-              .reject(new res.Error[status.key]('foo bar'))
-              .catch(function (err) {
-                res.sendError(err);
-              });
+            app.get('/', function (req, res) {
+
+              Bluebird
+                .reject(new res.Error[status.exceptionName]('foo bar'))
+                .catch(function (err) {
+                  res.sendError(err);
+                });
+            });
+
+            request
+              .get('/')
+              .expect(status.value)
+              .expect({
+                error: {
+                  name: status.exceptionName,
+                  message: 'foo bar'
+                }
+              })
+              .end(done);
           });
 
-          request
-            .get('/')
-            .expect(status.value)
-            .expect({
-              error: {
-                name: status.key,
-                message: 'foo bar'
-              }
-            })
-            .end(done);
         });
-
-      });
 
     });
 
@@ -138,7 +146,7 @@ describe('Server response', function () {
         it(s('should send {} if nullable value like ({value}) is send', { value: value }), function (done) {
 
           app.get('/', function (req, res) {
-            res.OK(value);
+            res.ok(value);
           });
 
           request
@@ -157,7 +165,7 @@ describe('Server response', function () {
         it(s('should send { data: {value} } if primitive value like a {class} is send', options), function (done) {
 
           app.get('/', function (req, res) {
-            res.OK(value);
+            res.ok(value);
           });
 
           request
@@ -176,7 +184,7 @@ describe('Server response', function () {
         it(s('should send {value} if a JSON value like an {class} is send', options), function (done) {
 
           app.get('/', function (req, res) {
-            res.OK(value);
+            res.ok(value);
           });
 
           request
