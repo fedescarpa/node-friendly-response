@@ -12,6 +12,8 @@ var request = require('request');
 var Bluebird = require('bluebird');
 var StatusCodes = require('./sort-http-status-codes');
 
+var format = require('../lib/utils/format');
+
 Bluebird.promisifyAll(request);
 
 describe('Incoming message response', function () {
@@ -56,8 +58,10 @@ describe('Incoming message response', function () {
   });
 
   StatusCodes.forEach(function (status) {
+    var methodName = format.conditionalMethod(status.key);
+    var options = _.defaults(_.clone(status), { methodName: methodName });
 
-    it(s('is{key} should be truth if response status is {value}', status), function (done) {
+    it(s('{methodName} should be truth if response status is {value}', options), function (done) {
 
       app.get('/', function (req, res) {
         res.status(status.value).end();
@@ -66,7 +70,7 @@ describe('Incoming message response', function () {
       request
         .getAsync({ uri: 'http://localhost:65000' })
         .spread(function (res, body) {
-          res['is' + status.key]().should.be.eql(true);
+          res[methodName]().should.be.eql(true);
         })
         .then(done, done);
 
