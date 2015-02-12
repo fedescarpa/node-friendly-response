@@ -4,7 +4,7 @@
   "description": "Easy way to make JSONs responses and promisified response flow",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha -R spec -t 50 test/**/*.test.js"
+    "test": "node_modules/mocha/bin/mocha -R spec -t 50 test/*.test.js test/**/*.test.js"
   },
   "repository": {
     "type": "git",
