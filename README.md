@@ -56,11 +56,11 @@ var express  = require('express');
 var Bluebird = require('bluebird');
 var Response = require('node-friendly-response');
 
+var ResponseError = Response.ResponseError;
 
 var app = express();
 
 app.get('/', function (req, res) {
-  var ResponseError = res.Error;
   Bluebird.resolve( req.body )
     .tap(function (body) {
       if (!body.value) {
@@ -140,39 +140,39 @@ res.insufficientStorage  // send a response with status 507
 ## Available Errors
 
 ```
-res.Error = res.Error.InternalServerError
+ResponseError = ResponseError.InternalServerError
 
-res.Error.BadRequest
-res.Error.Unauthorized
-res.Error.PaymentRequired
-res.Error.Forbidden
-res.Error.NotFound
-res.Error.MethodNotAllowed
-res.Error.NotAcceptable
-res.Error.ProxyAuthenticationRequired
-res.Error.RequestTimeout
-res.Error.Conflict
-res.Error.Gone
-res.Error.LengthRequired
-res.Error.PreconditionFailed
-res.Error.RequestTooLong
-res.Error.RequestUriTooLong
-res.Error.UnsupportedMediaType
-res.Error.RequestedRangeNotSatisfiable
-res.Error.ExpectationFailed
-res.Error.InsufficientSpaceOnResource
-res.Error.MethodFailure
-res.Error.UnprocessableEntity
-res.Error.Locked
-res.Error.FailedDependency
+ResponseError.BadRequest
+ResponseError.Unauthorized
+ResponseError.PaymentRequired
+ResponseError.Forbidden
+ResponseError.NotFound
+ResponseError.MethodNotAllowed
+ResponseError.NotAcceptable
+ResponseError.ProxyAuthenticationRequired
+ResponseError.RequestTimeout
+ResponseError.Conflict
+ResponseError.Gone
+ResponseError.LengthRequired
+ResponseError.PreconditionFailed
+ResponseError.RequestTooLong
+ResponseError.RequestUriTooLong
+ResponseError.UnsupportedMediaType
+ResponseError.RequestedRangeNotSatisfiable
+ResponseError.ExpectationFailed
+ResponseError.InsufficientSpaceOnResource
+ResponseError.MethodFailure
+ResponseError.UnprocessableEntity
+ResponseError.Locked
+ResponseError.FailedDependency
 
-res.Error.InternalServerError
-res.Error.NotImplemented
-res.Error.BadGateway
-res.Error.ServiceUnavailable
-res.Error.GatewayTimeout
-res.Error.HttpVersionNotSupported
-res.Error.InsufficientStorage
+ResponseError.InternalServerError
+ResponseError.NotImplemented
+ResponseError.BadGateway
+ResponseError.ServiceUnavailable
+ResponseError.GatewayTimeout
+ResponseError.HttpVersionNotSupported
+ResponseError.InsufficientStorage
 ```
 
 ## It works with request module too
