@@ -14,7 +14,7 @@ var supertest = require('supertest');
 
 var format = require('../lib/utils/format');
 var StatusCodes = require('./sort-http-status-codes');
-
+var ResponseError = require('../lib/response-error');
 
 describe('Server response', function () {
 
@@ -67,7 +67,7 @@ describe('Server response', function () {
             app.get('/', function (req, res) {
 
               Bluebird
-                .reject(new res.Error[status.exceptionName]('foo bar'))
+                .reject(new ResponseError[status.exceptionName]('foo bar'))
                 .catch(function (err) {
                   res.sendError(err);
                 });
