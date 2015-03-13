@@ -79,6 +79,50 @@ describe('Server response', function () {
     });
   });
 
+  context('#onResponseError', function() {
+
+    afterEach(function () {
+      HttpServerResponse.removeAllListeners(['response_error', 200]);
+    });
+
+    it('should call listener when status code is greather than 400', function (done) {
+      HttpServerResponse.onResponseError(function () {
+        done();
+      });
+
+      app.get('/', function (req, res) {
+        res.badRequest();
+      });
+
+      request
+        .get('/')
+        .expect(401)
+        .end(_.noop);
+
+    });
+
+    it('should not call listener when status code is less than 400', function (done) {
+      HttpServerResponse.onResponseError(function () {
+        done('should not call');
+      });
+
+      HttpServerResponse.onOk(function () {
+        done();
+      });
+
+      app.get('/', function (req, res) {
+        res.ok();
+      });
+
+      request
+        .get('/')
+        .expect(200)
+        .end(_.noop);
+
+    });
+
+  });
+
   context('#sendError', function () {
 
     context('#response error', function () {
