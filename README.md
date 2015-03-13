@@ -268,6 +268,74 @@ res.isHttpVersionNotSupported()  // if status code is 505
 res.isInsufficientStorage()  // if status code is 507
 ```
 
+### and also... listeners for events...
+
+```js
+
+var ServerResponse = require('node-friendly-response').ServerResponse;
+
+ServerResponse.onContinue(callback)  // if status code is 100
+ServerResponse.onSwitchingProtocols(callback)  // if status code is 101
+ServerResponse.onProcessing(callback)  // if status code is 102
+
+ServerResponse.onOk(callback)  // if status code is 200
+ServerResponse.onCreated(callback)  // if status code is 201
+ServerResponse.onAccepted(callback)  // if status code is 202
+ServerResponse.onNonAuthoritativeInformation(callback)  // if status code is 203
+ServerResponse.onNoContent(callback)  // if status code is 204
+ServerResponse.onResetContent(callback)  // if status code is 205
+ServerResponse.onPartialContent(callback)  // if status code is 206
+ServerResponse.onMultiStatus(callback)  // if status code is 207
+
+ServerResponse.onMultipleChoices(callback)  // if status code is 300
+ServerResponse.onMovedPermanently(callback)  // if status code is 301
+ServerResponse.onMovedTemporarily(callback)  // if status code is 302
+ServerResponse.onSeeOther(callback)  // if status code is 303
+ServerResponse.onNotModified(callback)  // if status code is 304
+ServerResponse.onUseProxy(callback)  // if status code is 305
+ServerResponse.onTemporaryRedirect(callback)  // if status code is 307
+
+ServerResponse.onBadRequest(callback)  // if status code is 400
+ServerResponse.onUnauthorized(callback)  // if status code is 401
+ServerResponse.onPaymentRequired(callback)  // if status code is 402
+ServerResponse.onForbidden(callback)  // if status code is 403
+ServerResponse.onNotFound(callback)  // if status code is 404
+ServerResponse.onMethodNotAllowed(callback)  // if status code is 405
+ServerResponse.onNotAcceptable(callback)  // if status code is 406
+ServerResponse.onProxyAuthenticationRequired(callback)  // if status code is 407
+ServerResponse.onRequestTimeout(callback)  // if status code is 408
+ServerResponse.onConflict(callback)  // if status code is 409
+ServerResponse.onGone(callback)  // if status code is 410
+ServerResponse.onLengthRequired(callback)  // if status code is 411
+ServerResponse.onPreconditionFailed(callback)  // if status code is 412
+ServerResponse.onRequestTooLong(callback)  // if status code is 413
+ServerResponse.onRequestUriTooLong(callback)  // if status code is 414
+ServerResponse.onUnsupportedMediaType(callback)  // if status code is 415
+ServerResponse.onRequestedRangeNotSatisfiable(callback)  // if status code is 416
+ServerResponse.onExpectationFailed(callback)  // if status code is 417
+ServerResponse.onInsufficientSpaceOnResource(callback)  // if status code is 419
+ServerResponse.onMethodFailure(callback)  // if status code is 420
+ServerResponse.onUnprocessableEntity(callback)  // if status code is 422
+ServerResponse.onLocked(callback)  // if status code is 423
+ServerResponse.onFailedDependency(callback)  // if status code is 424
+
+ServerResponse.onInternalServerError(callback)  // if status code is 500
+ServerResponse.onNotImplemented(callback)  // if status code is 501
+ServerResponse.onBadGateway(callback)  // if status code is 502
+ServerResponse.onServiceUnavailable(callback)  // if status code is 503
+ServerResponse.onGatewayTimeout(callback)  // if status code is 504
+ServerResponse.onHttpVersionNotSupported(callback)  // if status code is 505
+ServerResponse.onInsufficientStorage(callback)  // if status code is 507
+```
+
+### and also... listeners for error events...
+
+```js
+
+ServerResponse.onResponseError(callback); // if status code greather than 400
+ServerResponse.removeAllListeners(events); // remove all listeners for an event, the events is an array of status codes or the string 'response_error'
+
+```
 
 ## License
 
