@@ -3,7 +3,6 @@
 'use strict';
 
 require('should');
-require('../lib/server-response');
 
 var _ = require('lodash');
 var s = require('interpolate');
@@ -12,6 +11,7 @@ var express = require('express');
 var Bluebird = require('bluebird');
 var supertest = require('supertest');
 
+var HttpServerResponse = require('../lib/server-response');
 var format = require('../lib/utils/format');
 var StatusCodes = require('./sort-http-status-codes');
 var ResponseError = require('../lib/response-error');
@@ -48,6 +48,76 @@ describe('Server response', function () {
           .end(done);
 
       });
+
+    });
+
+  });
+
+  context('#on event from status', function() {
+
+    StatusCodes.forEach(function (status) {
+      var methodName = format.listenerMethod(status.key);
+      var options = _.defaults(_.clone(status), { methodName: methodName });
+
+      it(s('{methodName} should emit an event and call listener', options), function (done) {
+
+        HttpServerResponse[methodName](function (element) {
+          HttpServerResponse.removeAllListeners([element.statusCode]);
+          done();
+        });
+
+        app.get('/', function (req, res) {
+          res[format.method(status.key)]();
+        });
+
+        request
+          .get('/')
+          .expect(status.value)
+          .end(_.noop);
+      });
+
+    });
+  });
+
+  context('#onResponseError', function() {
+
+    afterEach(function () {
+      HttpServerResponse.removeAllListeners(['response_error', 200]);
+    });
+
+    it('should call listener when status code is greather than 400', function (done) {
+      HttpServerResponse.onResponseError(function () {
+        done();
+      });
+
+      app.get('/', function (req, res) {
+        res.badRequest();
+      });
+
+      request
+        .get('/')
+        .expect(401)
+        .end(_.noop);
+
+    });
+
+    it('should not call listener when status code is less than 400', function (done) {
+      HttpServerResponse.onResponseError(function () {
+        done('should not call');
+      });
+
+      HttpServerResponse.onOk(function () {
+        done();
+      });
+
+      app.get('/', function (req, res) {
+        res.ok();
+      });
+
+      request
+        .get('/')
+        .expect(200)
+        .end(_.noop);
 
     });
 
