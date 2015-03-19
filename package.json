@@ -1,6 +1,6 @@
 {
   "name": "node-friendly-response",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Easy way to make JSONs responses and promisified response flow",
   "main": "index.js",
   "scripts": {
