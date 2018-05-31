@@ -43,5 +43,8 @@
     "request": "2.53.0",
     "should": "4.6.1",
     "supertest": "0.15.0"
+  },
+  "peerDependencies": {
+    "lodash": "2.4.1"
   }
 }
