@@ -31,7 +31,7 @@
   "dependencies": {
     "http-status-codes": "1.0.4",
     "humanize-string": "1.0.1",
-    "lodash": "2.4.1",
+    "lodash": "4.17.10",
     "node-custom-errors": "0.1.5",
     "string": "3.0.0"
   },
@@ -43,5 +43,8 @@
     "request": "2.53.0",
     "should": "4.6.1",
     "supertest": "0.15.0"
+  },
+  "peerDependencies": {
+    "lodash": "4.17.10"
   }
 }
